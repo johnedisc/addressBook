@@ -39,17 +39,31 @@ Contact.prototype.fullName = function() {
   return this.first + ' ' + this.last; 
 }
 
-Contact.prototype.update = function(firstName,lastName,phoneNumber) {
-  
-}
+// ui
 
 let addressBook = new AddressBook();
-let george = new Contact('george','gwedel','483-384-3482');
-let miles = new Contact('miles','davis','432-542-9842');
-addressBook.addContact(george);
-addressBook.addContact(miles);
 
-george.first = 'jorge';
-console.log(addressBook.contacts['1'].first = 'georgie');
-console.log(george)
+function handleFormSubmission(event) {
+  event.preventDefault();
+  const inputtedFirstName = document.querySelector("input#new-first-name").value;
+  const inputtedLastName = document.querySelector("input#new-last-name").value;
+  const inputtedPhoneNumber = document.querySelector("input#new-phone-number").value;
+  let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber);
+  addressBook.addContact(newContact);
+  console.log(addressBook.contacts);
 
+  let contactKeys = Object.keys(addressBook.contacts);
+  let contactKeyStr = '';
+  contactKeys.forEach((key) => {
+    console.log(addressBook.contacts[key]);
+    let innerKeys = Object.keys(addressBook.contacts[key])
+    innerKeys.forEach((key2) => {
+      contactKeyStr = contactKeyStr.concat(key + ' (' + key2 + ': ' + addressBook.contacts[key][key2] + ')\n') 
+    });
+  });
+  console.log(contactKeyStr);
+}
+
+window.addEventListener("load", function (){
+  document.querySelector("form#new-contact").addEventListener("submit", handleFormSubmission);
+});
