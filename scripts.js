@@ -29,10 +29,12 @@ AddressBook.prototype.deleteContact = function(id) {
 };
 
 // business logic for Contact
-function Contact(firstName,lastName,phoneNumber) {
+function Contact(firstName,lastName,phoneNumber,email,address) {
   this.first = firstName;
   this.last = lastName;
   this.number = phoneNumber;
+  this.email = email;
+  this.address = address;
 }
 
 Contact.prototype.fullName = function() {
@@ -58,12 +60,13 @@ function listContacts(addressBookToDisplay) {
 }
 
 function displayContactDetails(event) {
-  console.log(typeof event.target.id);
   const contact = addressBook.findContact(event.target.id);
   console.log(contact);
   document.querySelector(".first-name").innerText = contact.first;
   document.querySelector(".last-name").innerText = contact.last;
   document.querySelector(".phone-number").innerText = contact.number;
+  document.querySelector(".email").innerText = contact.email;
+  document.querySelector(".address").innerText = contact.address;
   document.querySelector("button.delete").setAttribute("id", contact.id);
   document.querySelector("div#contact-details").removeAttribute("class");
 }
@@ -80,12 +83,16 @@ function handleFormSubmission(event) {
   const inputtedFirstName = document.querySelector("input#new-first-name").value;
   const inputtedLastName = document.querySelector("input#new-last-name").value;
   const inputtedPhoneNumber = document.querySelector("input#new-phone-number").value;
-  let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber);
+  const inputtedEmail = document.querySelector("input#new-email").value;
+  const inputtedAddress = document.querySelector("input#new-address").value;
+  let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmail, inputtedAddress);
   addressBook.addContact(newContact);
   listContacts(addressBook);
   document.querySelector("input#new-first-name").value = null;
   document.querySelector("input#new-last-name").value = null;
   document.querySelector("input#new-phone-number").value = null;
+  document.querySelector("input#new-email").value = null;
+  document.querySelector("input#new-address").value = null;
 
 }
 
